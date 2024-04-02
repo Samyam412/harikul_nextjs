@@ -1,8 +1,21 @@
+"use client";
+import { useState, useEffect } from "react";
+
 const Mapping = () => {
   const items = [1, 2, 3, 4, 5];
   const filteredItems = items.filter((item) => {
     return item < 3;
   });
+  const [data, setData] = useState("");
+  const getData = async () => {
+    const resp = await fetch("https://api.sampleapis.com/beers/ale");
+    const json = await resp.json();
+    setData(json);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const students = [
     { id: 1, name: "prinjal", marks: 20 },
@@ -13,9 +26,9 @@ const Mapping = () => {
     { id: 6, name: "fgsfdg", marks: 40 },
   ];
 
-  const filteredStudents = students.filter((student)=>{
-    return student.marks>30
-  })
+  const filteredStudents = students.filter((student) => {
+    return student.marks > 30;
+  });
 
   return (
     <div className="h-screen w-screen flex gap-4 flex-col items-center justify-center">
@@ -24,6 +37,7 @@ const Mapping = () => {
           {item.name}
         </div>
       ))}
+      {JSON.stringify(data, null, 2)}
     </div>
   );
 };
